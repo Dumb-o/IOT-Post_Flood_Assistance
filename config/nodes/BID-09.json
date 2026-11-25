@@ -1,0 +1,16 @@
+{
+  "name": "BID-09",
+  "label": "Bidur W-19 community tap",
+  "lat": 27.91680,
+  "lon": 85.16190,
+  "seed": 9,
+  "phase_s": 4.8,
+  "baseline": {
+    "ph0": 7.40,
+    "turb0": 3.4,
+    "tds0": 155,
+    "temp_mean": 19.8,
+    "flow0": 11.5,
+    "rssi0": -89
+  }
+}

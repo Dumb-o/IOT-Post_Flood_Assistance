@@ -1,0 +1,56 @@
+{
+  "name": "smoke",
+  "_comment": "Short pipeline check: one rain event, one blackhole outage, one bad-token reconnect and one refused-connection outage.",
+  "duration_s": 120,
+  "sample_period_s": 1.0,
+  "compression": 60,
+  "start_hour": 6.0,
+  "seed": 3,
+  "settle_s": 40,
+  "events": [
+    {
+      "at": 10,
+      "type": "rain",
+      "node": "BID-01",
+      "peak_ntu": 650,
+      "rise_min": 8,
+      "washout_min": 30
+    },
+    {
+      "at": 40,
+      "type": "outage",
+      "duration_s": 30,
+      "mode": "blackhole"
+    },
+    {
+      "at": 85,
+      "type": "bad_token",
+      "node": "BID-02",
+      "duration_s": 12
+    },
+    {
+      "at": 100,
+      "type": "outage",
+      "duration_s": 8,
+      "mode": "refuse"
+    }
+  ],
+  "screenshots": [
+    {
+      "at": 8,
+      "name": "01_normal"
+    },
+    {
+      "at": 28,
+      "name": "02_event"
+    },
+    {
+      "at": 66,
+      "name": "03_outage"
+    },
+    {
+      "at": 80,
+      "name": "04_after_backfill"
+    }
+  ]
+}

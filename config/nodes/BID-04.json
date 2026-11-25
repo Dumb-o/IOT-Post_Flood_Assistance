@@ -1,0 +1,16 @@
+{
+  "name": "BID-04",
+  "label": "Bidur W-09 school tap",
+  "lat": 27.92000,
+  "lon": 85.14000,
+  "seed": 4,
+  "phase_s": 1.8,
+  "baseline": {
+    "ph0": 7.20,
+    "turb0": 3.8,
+    "tds0": 175,
+    "temp_mean": 20.0,
+    "flow0": 12.0,
+    "rssi0": -87
+  }
+}

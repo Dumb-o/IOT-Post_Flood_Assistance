@@ -1,0 +1,16 @@
+{
+  "name": "BID-03",
+  "label": "Bidur W-07 hill spring tank",
+  "lat": 27.91500,
+  "lon": 85.14500,
+  "seed": 3,
+  "phase_s": 1.2,
+  "baseline": {
+    "ph0": 7.05,
+    "turb0": 2.6,
+    "tds0": 210,
+    "temp_mean": 18.0,
+    "flow0": 9.5,
+    "rssi0": -93
+  }
+}

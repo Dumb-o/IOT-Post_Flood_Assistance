@@ -1,0 +1,90 @@
+{
+  "name": "demo",
+  "_comment": "Full live demonstration timeline. Times are real seconds from start; rise_min, washout_min and duration_min are simulated process minutes.",
+  "duration_s": 600,
+  "sample_period_s": 2.0,
+  "compression": 60,
+  "start_hour": 6.0,
+  "seed": 7,
+  "settle_s": 90,
+  "events": [
+    {
+      "at": 40,
+      "type": "mark",
+      "label": "normal state: all nodes green"
+    },
+    {
+      "at": 60,
+      "type": "rain",
+      "node": "BID-01",
+      "peak_ntu": 650,
+      "rise_min": 12,
+      "washout_min": 70
+    },
+    {
+      "at": 75,
+      "type": "rain",
+      "node": "BID-02",
+      "peak_ntu": 140,
+      "rise_min": 15,
+      "washout_min": 50
+    },
+    {
+      "at": 200,
+      "type": "interruption",
+      "node": "BID-03",
+      "duration_min": 60
+    },
+    {
+      "at": 280,
+      "type": "rssi",
+      "node": "BID-01",
+      "penalty_db": 18
+    },
+    {
+      "at": 290,
+      "type": "outage",
+      "duration_s": 150,
+      "mode": "blackhole"
+    },
+    {
+      "at": 445,
+      "type": "rssi",
+      "node": "BID-01",
+      "penalty_db": 0
+    },
+    {
+      "at": 470,
+      "type": "mark",
+      "label": "backfill complete: charts gap-free"
+    }
+  ],
+  "screenshots": [
+    {
+      "at": 40,
+      "name": "01_normal"
+    },
+    {
+      "at": 110,
+      "name": "02_warning_then_critical"
+    },
+    {
+      "at": 240,
+      "name": "03_supply_interruption"
+    },
+    {
+      "at": 400,
+      "name": "04_outage_nodes_inactive"
+    },
+    {
+      "at": 470,
+      "name": "05_after_backfill"
+    },
+    {
+      "at": 475,
+      "name": "06_after_backfill_BID-01",
+      "state": "node",
+      "device": "BID-01"
+    }
+  ]
+}

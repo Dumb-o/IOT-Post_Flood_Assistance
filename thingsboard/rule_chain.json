@@ -1,0 +1,379 @@
+{
+  "ruleChain": {
+    "additionalInfo": {
+      "description": "JalDrishti: rx stamp, WQI, alarm mirror, inactivity, webhook"
+    },
+    "name": "JalDrishti Ingest",
+    "type": "CORE",
+    "firstRuleNodeId": null,
+    "root": false,
+    "debugMode": false,
+    "configuration": null
+  },
+  "metadata": {
+    "firstNodeIndex": 0,
+    "nodes": [
+      {
+        "type": "org.thingsboard.rule.engine.filter.TbMsgTypeSwitchNode",
+        "name": "Message Type Switch",
+        "debugSettings": {
+          "failuresEnabled": true,
+          "allEnabled": false,
+          "allEnabledUntil": 0
+        },
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "version": 0
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 300,
+          "layoutY": 300
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Stamp rx_ms + WQI",
+        "debugSettings": {
+          "failuresEnabled": true,
+          "allEnabled": false,
+          "allEnabledUntil": 0
+        },
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "TBEL",
+          "jsScript": "return {msg: msg, metadata: metadata, msgType: msgType};",
+          "tbelScript": "// JalDrishti: stamp server receipt time and derive the Brown WQI (Task 2, Sec. 8.2).\n// One message per client timestamp: metadata.ts is the node's acquisition time.\nvar out = msg;\nout.rx_ms = Date.now();\nif (msg.ph != null && msg.turbidity_ntu != null && msg.tds_ppm != null) {\n    var dph = msg.ph - 7.0;\n    if (dph < 0) { dph = -dph; }\n    var tds = msg.tds_ppm;\n    if (tds > 1000) { tds = 1000; }\n    // q_i = 100 |V_i - V_0| / (S_i - V_0);  w = 0.36921, 0.62765, 0.00314 (sum 1)\n    out.wqi = 0.36921 * (100.0 * dph / 1.5) + 0.62765 * (20.0 * msg.turbidity_ntu) + 0.00314 * (0.1 * tds);\n}\nreturn {msg: out, metadata: metadata, msgType: msgType};"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 620,
+          "layoutY": 120
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.telemetry.TbMsgTimeseriesNode",
+        "name": "Save Timeseries (client ts)",
+        "debugSettings": {
+          "failuresEnabled": true,
+          "allEnabled": false,
+          "allEnabledUntil": 0
+        },
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 1,
+        "configuration": {
+          "defaultTTL": 0,
+          "useServerTs": false,
+          "processingSettings": {
+            "type": "ON_EVERY_MESSAGE"
+          }
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 920,
+          "layoutY": 120
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.telemetry.TbMsgAttributesNode",
+        "name": "Save Client Attributes",
+        "debugSettings": {
+          "failuresEnabled": true,
+          "allEnabled": false,
+          "allEnabledUntil": 0
+        },
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 3,
+        "configuration": {
+          "processingSettings": {
+            "type": "ON_EVERY_MESSAGE"
+          },
+          "scope": "CLIENT_SCOPE",
+          "notifyDevice": false,
+          "sendAttributesUpdatedNotification": false,
+          "updateAttributesOnlyOnValueChange": true
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 620,
+          "layoutY": 20
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "Node Inactive: create",
+        "debugSettings": {
+          "failuresEnabled": true,
+          "allEnabled": false,
+          "allEnabledUntil": 0
+        },
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "alarmType": "Node Inactive",
+          "severity": "CRITICAL",
+          "scriptLang": "TBEL",
+          "alarmDetailsBuildJs": "return {};",
+          "alarmDetailsBuildTbel": "var details = {};\ndetails.reason = 'no telemetry within the inactivity timeout';\nif (metadata.lastActivityTime != null) { details.lastActivityTime = metadata.lastActivityTime; }\nreturn details;",
+          "propagate": false,
+          "propagateToOwner": false,
+          "propagateToTenant": false,
+          "useMessageAlarmData": false,
+          "overwriteAlarmDetails": false,
+          "dynamicSeverity": false,
+          "relationTypes": []
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 620,
+          "layoutY": 420
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "Node Inactive: clear",
+        "debugSettings": {
+          "failuresEnabled": true,
+          "allEnabled": false,
+          "allEnabledUntil": 0
+        },
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "alarmType": "Node Inactive",
+          "scriptLang": "TBEL",
+          "alarmDetailsBuildJs": "return {};",
+          "alarmDetailsBuildTbel": "return {};"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 620,
+          "layoutY": 520
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Alarm -> alm_* attribute",
+        "debugSettings": {
+          "failuresEnabled": true,
+          "allEnabled": false,
+          "allEnabledUntil": 0
+        },
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "TBEL",
+          "jsScript": "return {msg: msg, metadata: metadata, msgType: msgType};",
+          "tbelScript": "// JalDrishti: mirror each alarm into a server attribute alm_<kind> = severity | NONE.\n// The map marker colour, the status table and the node detail view read these keys.\nvar keys = {\"High Turbidity\": \"alm_turbidity_warn\", \"Gross Contamination\": \"alm_turbidity_crit\", \"pH Out of Range\": \"alm_ph\", \"High TDS\": \"alm_tds\", \"Supply Interruption\": \"alm_flow\", \"Node Inactive\": \"alm_inactive\"};\nvar k = keys[msg.type];\nif (k == null) { k = 'alm_other'; }\nvar st = msg.status;\nvar cleared = msgType == 'ALARM_CLEAR' || metadata.isClearedAlarm == 'true' || msg.cleared == true\n              || (st != null && st.startsWith('CLEARED'));\nvar out = {};\nout[k] = cleared ? 'NONE' : msg.severity;\nout[k + '_ts'] = cleared ? msg.clearTs : msg.createdTime;\nreturn {msg: out, metadata: metadata, msgType: 'POST_ATTRIBUTES_REQUEST'};"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 920,
+          "layoutY": 320
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.telemetry.TbMsgAttributesNode",
+        "name": "Save Server Attributes",
+        "debugSettings": {
+          "failuresEnabled": true,
+          "allEnabled": false,
+          "allEnabledUntil": 0
+        },
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 3,
+        "configuration": {
+          "processingSettings": {
+            "type": "ON_EVERY_MESSAGE"
+          },
+          "scope": "SERVER_SCOPE",
+          "notifyDevice": false,
+          "sendAttributesUpdatedNotification": false,
+          "updateAttributesOnlyOnValueChange": false
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 1220,
+          "layoutY": 320
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.action.TbLogNode",
+        "name": "Log Other",
+        "debugSettings": {
+          "failuresEnabled": true,
+          "allEnabled": false,
+          "allEnabledUntil": 0
+        },
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "TBEL",
+          "jsScript": "return JSON.stringify(msg);",
+          "tbelScript": "return '\\nIncoming message:\\n' + JSON.stringify(msg) + '\\nIncoming metadata:\\n' + JSON.stringify(metadata);"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 620,
+          "layoutY": 620
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "New Critical?",
+        "debugSettings": {
+          "failuresEnabled": true,
+          "allEnabled": false,
+          "allEnabledUntil": 0
+        },
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "TBEL",
+          "jsScript": "return false;",
+          "tbelScript": "return msg.severity == 'CRITICAL' && (metadata.isNewAlarm == 'true' || msgType == 'ALARM_CREATED');"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 920,
+          "layoutY": 470
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.rest.TbRestApiCallNode",
+        "name": "Notify (webhook)",
+        "debugSettings": {
+          "failuresEnabled": true,
+          "allEnabled": false,
+          "allEnabledUntil": 0
+        },
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 3,
+        "configuration": {
+          "restEndpointUrlPattern": "${WEBHOOK_URL}",
+          "requestMethod": "POST",
+          "useSimpleClientHttpFactory": false,
+          "parseToPlainText": false,
+          "ignoreRequestBody": false,
+          "enableProxy": false,
+          "useSystemProxyProperties": false,
+          "proxyScheme": null,
+          "proxyHost": null,
+          "proxyPort": 0,
+          "proxyUser": null,
+          "proxyPassword": null,
+          "readTimeoutMs": 5000,
+          "maxParallelRequestsCount": 0,
+          "headers": {
+            "Content-Type": "application/json"
+          },
+          "credentials": {
+            "type": "anonymous"
+          },
+          "maxInMemoryBufferSizeInKb": 256
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 1220,
+          "layoutY": 470
+        }
+      }
+    ],
+    "ruleChainConnections": null,
+    "connections": [
+      {
+        "fromIndex": 0,
+        "toIndex": 1,
+        "type": "Post telemetry"
+      },
+      {
+        "fromIndex": 1,
+        "toIndex": 2,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 0,
+        "toIndex": 3,
+        "type": "Post attributes"
+      },
+      {
+        "fromIndex": 0,
+        "toIndex": 4,
+        "type": "Inactivity Event"
+      },
+      {
+        "fromIndex": 0,
+        "toIndex": 5,
+        "type": "Activity Event"
+      },
+      {
+        "fromIndex": 0,
+        "toIndex": 6,
+        "type": "Alarm Created"
+      },
+      {
+        "fromIndex": 0,
+        "toIndex": 6,
+        "type": "Alarm Updated"
+      },
+      {
+        "fromIndex": 0,
+        "toIndex": 6,
+        "type": "Alarm Severity Updated"
+      },
+      {
+        "fromIndex": 0,
+        "toIndex": 6,
+        "type": "Alarm Cleared"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 6,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 6,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 6,
+        "toIndex": 7,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 0,
+        "toIndex": 8,
+        "type": "Other"
+      },
+      {
+        "fromIndex": 0,
+        "toIndex": 9,
+        "type": "Alarm Created"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 9,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 9,
+        "toIndex": 10,
+        "type": "True"
+      }
+    ]
+  }
+}

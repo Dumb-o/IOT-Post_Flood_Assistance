@@ -1,0 +1,32 @@
+{
+  "_comment": "Global JalDrishti settings. Field sensors are loaded from config/nodes/*.json. One file per node makes new nodes easy to add without image rebuilds.",
+  "profile": "JalDrishti Water Node",
+  "control_nodes": [
+    {
+      "name": "JD-CTRL-01",
+      "label": "Control node without store-and-forward",
+      "lat": 27.90100,
+      "lon": 85.15600,
+      "seed": 101,
+      "phase_s": 0.3,
+      "store_forward": false,
+      "baseline": {
+        "ph0": 7.20,
+        "turb0": 3.5,
+        "tds0": 180,
+        "temp_mean": 20.0,
+        "flow0": 12.0,
+        "rssi0": -86
+      }
+    }
+  ],
+  "bench_nodes": [
+    {
+      "name": "JD-BENCH-01",
+      "label": "Batch-size sweep bench device",
+      "lat": 27.90000,
+      "lon": 85.15000,
+      "seed": 102
+    }
+  ]
+}

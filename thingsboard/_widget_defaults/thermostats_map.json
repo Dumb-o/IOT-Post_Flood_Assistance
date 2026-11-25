@@ -1,0 +1,258 @@
+{
+ "typeFullFqn": "system.map",
+ "type": "latest",
+ "sizeX": 8.5,
+ "sizeY": 6,
+ "config": {
+  "datasources": [],
+  "timewindow": {
+   "displayValue": "",
+   "selectedTab": 0,
+   "realtime": {
+    "realtimeType": 1,
+    "interval": 1000,
+    "timewindowMs": 60000,
+    "quickInterval": "CURRENT_DAY",
+    "hideInterval": false,
+    "hideLastInterval": false,
+    "hideQuickInterval": false
+   },
+   "history": {
+    "historyType": 0,
+    "interval": 1000,
+    "timewindowMs": 60000,
+    "fixedTimewindow": {
+     "startTimeMs": 1741884755143,
+     "endTimeMs": 1741971155143
+    },
+    "quickInterval": "CURRENT_DAY",
+    "hideInterval": false,
+    "hideLastInterval": false,
+    "hideFixedInterval": false,
+    "hideQuickInterval": false
+   },
+   "aggregation": {
+    "type": "AVG",
+    "limit": 25000
+   }
+  },
+  "showTitle": false,
+  "backgroundColor": "rgba(0, 0, 0, 0)",
+  "color": "rgba(0, 0, 0, 0.87)",
+  "padding": "0px",
+  "settings": {
+   "mapType": "geoMap",
+   "layers": [
+    {
+     "label": "{i18n:widgets.maps.layer.roadmap}",
+     "provider": "openstreet",
+     "layerType": "OpenStreetMap.Mapnik"
+    },
+    {
+     "label": "{i18n:widgets.maps.layer.satellite}",
+     "provider": "openstreet",
+     "layerType": "Esri.WorldImagery"
+    },
+    {
+     "label": "{i18n:widgets.maps.layer.hybrid}",
+     "provider": "openstreet",
+     "layerType": "Esri.WorldImagery",
+     "referenceLayer": "openstreetmap_hybrid"
+    }
+   ],
+   "imageSource": null,
+   "markers": [
+    {
+     "dsType": "entity",
+     "dsLabel": "",
+     "dsDeviceId": null,
+     "dsEntityAliasId": "68a058e1-fdda-8482-715b-3ae4a488568e",
+     "dsFilterId": null,
+     "additionalDataKeys": [
+      {
+       "name": "temperature",
+       "type": "timeseries",
+       "label": "temperature",
+       "color": "#2196f3",
+       "settings": {},
+       "_hash": 0.570889787682481,
+       "aggregationType": "NONE",
+       "units": null,
+       "decimals": null,
+       "funcBody": null,
+       "usePostProcessing": true,
+       "postFuncBody": "return value || \"\";"
+      },
+      {
+       "name": "humidity",
+       "type": "timeseries",
+       "label": "humidity",
+       "color": "#2196f3",
+       "settings": {},
+       "_hash": 0.13597394595782442,
+       "aggregationType": "NONE",
+       "units": null,
+       "decimals": null,
+       "funcBody": null,
+       "usePostProcessing": true,
+       "postFuncBody": "return value || \"\";"
+      },
+      {
+       "name": "active",
+       "type": "attribute",
+       "label": "active",
+       "color": "#2196f3",
+       "settings": {},
+       "_hash": 0.21080919932756603
+      }
+     ],
+     "label": {
+      "show": true,
+      "type": "function",
+      "pattern": "${entityName}",
+      "patternFunction": "var color;\nif(data.active !== \"true\"){\n    color = 'rgb(255, 0, 0)';\n} else {\n    color = 'rgb(39, 134, 34)';\n}\nreturn '<span style=\"border: solid ' + color + '; border-radius: 10px; color: ' + color + '; background-color: #fff; padding: 3px 5px; font-size: 14px; position: relative; bottom: 6px;\">' + \n           '${entityLabel}' + \n        '</span>'"
+     },
+     "tooltip": {
+      "show": true,
+      "trigger": "click",
+      "autoclose": true,
+      "type": "pattern",
+      "pattern": "<b>${entityName}</b><br/><br/><b>Temperature:</b> ${temperature:1} \u00b0C<br/><b>Humidity:</b> ${humidity:0} %<br/><br/><link-act name=\"navigate_to_details\">Thermostat details</link-act><br/>",
+      "offsetX": 0,
+      "offsetY": -1,
+      "patternFunction": null,
+      "tagActions": [
+       {
+        "name": "navigate_to_details",
+        "type": "openDashboardState",
+        "targetDashboardStateId": "chart",
+        "setEntityId": true,
+        "stateEntityParamName": null,
+        "openRightLayout": false,
+        "openInSeparateDialog": false,
+        "openInPopover": false
+       }
+      ]
+     },
+     "click": {
+      "type": "doNothing"
+     },
+     "groups": null,
+     "edit": {
+      "enabledActions": [],
+      "attributeScope": "SERVER_SCOPE",
+      "snappable": false
+     },
+     "xKey": {
+      "name": "latitude",
+      "label": "latitude",
+      "type": "attribute",
+      "settings": {},
+      "color": "#2196f3"
+     },
+     "yKey": {
+      "name": "longitude",
+      "label": "longitude",
+      "type": "attribute",
+      "settings": {},
+      "color": "#2196f3"
+     },
+     "markerType": "icon",
+     "markerShape": {
+      "shape": "markerShape1",
+      "size": 34,
+      "color": {
+       "type": "constant",
+       "color": "#307FE5"
+      }
+     },
+     "markerIcon": {
+      "size": 48,
+      "color": {
+       "type": "function",
+       "color": "rgb(255, 0, 0)",
+       "range": null,
+       "colorFunction": "if (data.active !== \"true\"){\n   return 'rgb(255, 0, 0)';\n} else {\n   return 'rgb(39, 134, 34)';\n}"
+      },
+      "iconContainer": "iconContainer1",
+      "icon": "thermostat"
+     },
+     "markerImage": {
+      "type": "function",
+      "imageFunction": "return {};",
+      "images": []
+     },
+     "markerOffsetX": 0.5,
+     "markerOffsetY": 1,
+     "markerClustering": {
+      "enable": false,
+      "zoomOnClick": true,
+      "maxZoom": null,
+      "maxClusterRadius": 80,
+      "zoomAnimation": true,
+      "showCoverageOnHover": true,
+      "spiderfyOnMaxZoom": false,
+      "chunkedLoad": false,
+      "lazyLoad": true,
+      "useClusterMarkerColorFunction": false,
+      "clusterMarkerColorFunction": null
+     }
+    }
+   ],
+   "polygons": [],
+   "circles": [],
+   "additionalDataSources": [],
+   "controlsPosition": "topleft",
+   "zoomActions": [
+    "scroll",
+    "doubleClick",
+    "controlButtons"
+   ],
+   "scales": [],
+   "dragModeButton": false,
+   "fitMapBounds": true,
+   "useDefaultCenterPosition": false,
+   "defaultCenterPosition": "0,0",
+   "defaultZoomLevel": 14,
+   "mapPageSize": 16384,
+   "mapActionButtons": [],
+   "background": {
+    "type": "color",
+    "color": "#fff",
+    "overlay": {
+     "enabled": false,
+     "color": "rgba(255,255,255,0.72)",
+     "blur": 3
+    }
+   },
+   "padding": "8px"
+  },
+  "title": "Map",
+  "useDashboardTimewindow": true,
+  "displayTimewindow": true,
+  "showTitleIcon": false,
+  "titleTooltip": "",
+  "dropShadow": true,
+  "enableFullscreen": false,
+  "widgetStyle": {},
+  "widgetCss": "",
+  "titleStyle": {
+   "fontSize": "16px",
+   "fontWeight": 400
+  },
+  "pageSize": 1024,
+  "noDataDisplayMessage": "",
+  "configMode": "advanced",
+  "titleFont": null,
+  "titleColor": null,
+  "margin": "0px",
+  "borderRadius": "0px",
+  "iconSize": "24px",
+  "titleIcon": "map",
+  "iconColor": "#1F6BDD",
+  "actions": {}
+ },
+ "row": 0,
+ "col": 0,
+ "id": "5186d1e3-f076-e062-5129-e4dd8e4adfb0"
+}

@@ -1,0 +1,3 @@
+Default widget configurations copied from ThingsBoard CE v4.3.0.1
+(application/src/main/data/json/system/widget_types and demo/dashboards/thermostats.json),
+Copyright The ThingsBoard Authors, Apache License 2.0. Used by tools/tb_config.py as templates.

@@ -1,0 +1,16 @@
+{
+  "name": "BID-01",
+  "label": "Bidur W-01 river-side intake",
+  "lat": 27.89860,
+  "lon": 85.15940,
+  "seed": 1,
+  "phase_s": 0.0,
+  "baseline": {
+    "ph0": 7.25,
+    "turb0": 4.2,
+    "tds0": 185,
+    "temp_mean": 20.5,
+    "flow0": 13.5,
+    "rssi0": -84
+  }
+}

@@ -1,0 +1,547 @@
+{
+  "source": "thingsboard",
+  "run": "measure-20261126-000140",
+  "t0_ms": 1795630605859,
+  "end_ms": 1795632045903,
+  "sample_period_s": 2.0,
+  "clock_offset_ms_applied": 0.0,
+  "latency_ms": {
+    "server_stamped_live": {
+      "n": 1847,
+      "mean": 30.128857606930158,
+      "median": 30.0,
+      "p95": 45.0,
+      "max": 736.0,
+      "min": 10.0,
+      "stdev": 19.680932591787553
+    },
+    "edge_publish_bound_live": {
+      "n": 1847,
+      "mean": 10.687060097455333,
+      "median": 9.0,
+      "p95": 15.0,
+      "max": 701.0,
+      "min": 4.0,
+      "stdev": 17.297973328878403
+    },
+    "edge_puback_bound_live": {
+      "n": 1847,
+      "mean": 17.72820790471034,
+      "median": 15.0,
+      "p95": 25.0,
+      "max": 710.0,
+      "min": 8.0,
+      "stdev": 17.830634964636094
+    },
+    "backfilled_age_at_receipt": {
+      "n": 313,
+      "mean": 94078.51757188498,
+      "median": 92278.0,
+      "p95": 187248.59999999998,
+      "max": 208635.0,
+      "min": 1446.0,
+      "stdev": 58378.13647932942
+    }
+  },
+  "delivery": {
+    "per_node": {
+      "BID-01": {
+        "generated": 720,
+        "delivered": 720,
+        "ratio": 1.0,
+        "edge_confirmed_synced": 720,
+        "edge_synced_ratio": 1.0,
+        "store_forward": true
+      },
+      "BID-02": {
+        "generated": 720,
+        "delivered": 720,
+        "ratio": 1.0,
+        "edge_confirmed_synced": 720,
+        "edge_synced_ratio": 1.0,
+        "store_forward": true
+      },
+      "BID-03": {
+        "generated": 720,
+        "delivered": 720,
+        "ratio": 1.0,
+        "edge_confirmed_synced": 720,
+        "edge_synced_ratio": 1.0,
+        "store_forward": true
+      }
+    },
+    "pilot_ratio": 1.0,
+    "pilot_edge_synced_ratio": 1.0,
+    "pilot_generated": 2160,
+    "pilot_delivered": 2160,
+    "outage_s": 180
+  },
+  "data_loss": {
+    "per_node": {
+      "BID-01": {
+        "lost": 0,
+        "lost_pct": 0.0,
+        "evicted_unsynced": 0,
+        "pending_at_end": 0
+      },
+      "BID-02": {
+        "lost": 0,
+        "lost_pct": 0.0,
+        "evicted_unsynced": 0,
+        "pending_at_end": 0
+      },
+      "BID-03": {
+        "lost": 0,
+        "lost_pct": 0.0,
+        "evicted_unsynced": 0,
+        "pending_at_end": 0
+      }
+    },
+    "pilot_lost": 0,
+    "pilot_lost_pct": 0.0,
+    "republished_rows": 3
+  },
+  "recovery": [
+    {
+      "node": "BID-01",
+      "restore_ms": 1795631485862,
+      "depth_at_reconnect": 91,
+      "rows_flushed": 91,
+      "reconnect_after_restore_s": 1.288,
+      "drain_s": 0.079,
+      "throughput_rows_per_s": 1151.8987341772151,
+      "recovery_s_from_restore": 1.37,
+      "recovery_s_from_reconnect": 0.082,
+      "batch": 25
+    },
+    {
+      "node": "BID-02",
+      "restore_ms": 1795631485862,
+      "depth_at_reconnect": 99,
+      "rows_flushed": 99,
+      "reconnect_after_restore_s": 16.745,
+      "drain_s": 0.095,
+      "throughput_rows_per_s": 1042.1052631578948,
+      "recovery_s_from_restore": 16.844,
+      "recovery_s_from_reconnect": 0.099,
+      "batch": 25
+    },
+    {
+      "node": "BID-03",
+      "restore_ms": 1795631485862,
+      "depth_at_reconnect": 105,
+      "rows_flushed": 105,
+      "reconnect_after_restore_s": 29.801,
+      "drain_s": 0.102,
+      "throughput_rows_per_s": 1029.4117647058824,
+      "recovery_s_from_restore": 29.907,
+      "recovery_s_from_reconnect": 0.106,
+      "batch": 25
+    }
+  ],
+  "flush_throughput_rows_per_s": {
+    "n": 3,
+    "mean": 1074.4719206803309,
+    "median": 1042.1052631578948,
+    "p95": 1140.919387075283,
+    "max": 1151.8987341772151,
+    "min": 1029.4117647058824,
+    "stdev": 54.993725775151205
+  },
+  "alarms": [
+    {
+      "node": "BID-01",
+      "type": "High Turbidity",
+      "severity": "WARNING",
+      "created_ms": 1795630668657,
+      "start_ts": 1795630667860,
+      "clear_ts": 1795630911860,
+      "status": "CLEARED_UNACK",
+      "breach_ts": 1795630667860,
+      "delay_ms": 797.0,
+      "delay_minus_duration_ms": 797.0,
+      "breach_sent_live": 1
+    },
+    {
+      "node": "BID-01",
+      "type": "Gross Contamination",
+      "severity": "CRITICAL",
+      "created_ms": 1795630672717,
+      "start_ts": 1795630671860,
+      "clear_ts": 1795630813860,
+      "status": "CLEARED_UNACK",
+      "breach_ts": 1795630671860,
+      "delay_ms": 857.0,
+      "delay_minus_duration_ms": 857.0,
+      "breach_sent_live": 1
+    },
+    {
+      "node": "BID-01",
+      "type": "pH Out of Range",
+      "severity": "CRITICAL",
+      "created_ms": 1795630674753,
+      "start_ts": 1795630673860,
+      "clear_ts": 1795630781860,
+      "status": "CLEARED_UNACK",
+      "breach_ts": 1795630673860,
+      "delay_ms": 893.0,
+      "delay_minus_duration_ms": 893.0,
+      "breach_sent_live": 1
+    },
+    {
+      "node": "BID-01",
+      "type": "High TDS",
+      "severity": "CRITICAL",
+      "created_ms": 1795630678814,
+      "start_ts": 1795630677860,
+      "clear_ts": 1795630725860,
+      "status": "CLEARED_UNACK",
+      "breach_ts": 1795630677860,
+      "delay_ms": 954.0,
+      "delay_minus_duration_ms": 954.0,
+      "breach_sent_live": 1
+    },
+    {
+      "node": "BID-01",
+      "type": "Node Inactive",
+      "severity": "CRITICAL",
+      "created_ms": 1795631375526,
+      "start_ts": 1795631375500,
+      "clear_ts": 1795631487210,
+      "status": "CLEARED_UNACK",
+      "last_data_ts": 1795631373860,
+      "detection_ms": 1666.0
+    },
+    {
+      "node": "BID-01",
+      "type": "High Turbidity",
+      "severity": "WARNING",
+      "created_ms": 1795631610148,
+      "start_ts": 1795631609860,
+      "clear_ts": 1795631795860,
+      "status": "CLEARED_UNACK",
+      "breach_ts": 1795631609860,
+      "delay_ms": 288.0,
+      "delay_minus_duration_ms": 288.0,
+      "breach_sent_live": 1
+    },
+    {
+      "node": "BID-01",
+      "type": "Gross Contamination",
+      "severity": "CRITICAL",
+      "created_ms": 1795631612177,
+      "start_ts": 1795631611860,
+      "clear_ts": 1795631711860,
+      "status": "CLEARED_UNACK",
+      "breach_ts": 1795631611860,
+      "delay_ms": 317.0,
+      "delay_minus_duration_ms": 317.0,
+      "breach_sent_live": 1
+    },
+    {
+      "node": "BID-01",
+      "type": "pH Out of Range",
+      "severity": "CRITICAL",
+      "created_ms": 1795631614207,
+      "start_ts": 1795631613860,
+      "clear_ts": 1795631683860,
+      "status": "CLEARED_UNACK",
+      "breach_ts": 1795631613860,
+      "delay_ms": 347.0,
+      "delay_minus_duration_ms": 347.0,
+      "breach_sent_live": 1
+    },
+    {
+      "node": "BID-01",
+      "type": "Supply Interruption",
+      "severity": "MAJOR",
+      "created_ms": 1795631835861,
+      "start_ts": 1795631833860,
+      "clear_ts": 1795631866387,
+      "status": "CLEARED_UNACK",
+      "breach_ts": 1795631805860,
+      "delay_ms": 30001.0,
+      "delay_minus_duration_ms": 1.0,
+      "breach_sent_live": 1
+    },
+    {
+      "node": "BID-01",
+      "type": "Node Inactive",
+      "severity": "CRITICAL",
+      "created_ms": 1795632110530,
+      "start_ts": 1795632110500,
+      "clear_ts": null,
+      "status": "ACTIVE_UNACK",
+      "last_data_ts": 1795632043860,
+      "detection_ms": 66670.0
+    },
+    {
+      "node": "BID-02",
+      "type": "High Turbidity",
+      "severity": "WARNING",
+      "created_ms": 1795630702546,
+      "start_ts": 1795630702460,
+      "clear_ts": 1795630806460,
+      "status": "CLEARED_UNACK",
+      "breach_ts": 1795630702460,
+      "delay_ms": 86.0,
+      "delay_minus_duration_ms": 86.0,
+      "breach_sent_live": 1
+    },
+    {
+      "node": "BID-02",
+      "type": "Supply Interruption",
+      "severity": "MAJOR",
+      "created_ms": 1795631036461,
+      "start_ts": 1795631034460,
+      "clear_ts": 1795631067256,
+      "status": "CLEARED_UNACK",
+      "breach_ts": 1795631006460,
+      "delay_ms": 30001.0,
+      "delay_minus_duration_ms": 1.0,
+      "breach_sent_live": 1
+    },
+    {
+      "node": "BID-02",
+      "type": "High Turbidity",
+      "severity": "WARNING",
+      "created_ms": 1795631089470,
+      "start_ts": 1795631088460,
+      "clear_ts": 1795631308461,
+      "status": "CLEARED_UNACK",
+      "breach_ts": 1795631088460,
+      "delay_ms": 1010.0,
+      "delay_minus_duration_ms": 1010.0,
+      "breach_sent_live": 1
+    },
+    {
+      "node": "BID-02",
+      "type": "Gross Contamination",
+      "severity": "CRITICAL",
+      "created_ms": 1795631091510,
+      "start_ts": 1795631090460,
+      "clear_ts": 1795631222460,
+      "status": "CLEARED_UNACK",
+      "breach_ts": 1795631090460,
+      "delay_ms": 1050.0,
+      "delay_minus_duration_ms": 1050.0,
+      "breach_sent_live": 1
+    },
+    {
+      "node": "BID-02",
+      "type": "pH Out of Range",
+      "severity": "CRITICAL",
+      "created_ms": 1795631093542,
+      "start_ts": 1795631092460,
+      "clear_ts": 1795631192460,
+      "status": "CLEARED_UNACK",
+      "breach_ts": 1795631092460,
+      "delay_ms": 1082.0,
+      "delay_minus_duration_ms": 1082.0,
+      "breach_sent_live": 1
+    },
+    {
+      "node": "BID-02",
+      "type": "High TDS",
+      "severity": "CRITICAL",
+      "created_ms": 1795631096618,
+      "start_ts": 1795631096460,
+      "clear_ts": 1795631148460,
+      "status": "CLEARED_UNACK",
+      "breach_ts": 1795631096460,
+      "delay_ms": 158.0,
+      "delay_minus_duration_ms": 158.0,
+      "breach_sent_live": 1
+    },
+    {
+      "node": "BID-02",
+      "type": "Node Inactive",
+      "severity": "CRITICAL",
+      "created_ms": 1795631375505,
+      "start_ts": 1795631375491,
+      "clear_ts": 1795631502743,
+      "status": "CLEARED_UNACK",
+      "last_data_ts": 1795631374460,
+      "detection_ms": 1045.0
+    },
+    {
+      "node": "BID-02",
+      "type": "Node Inactive",
+      "severity": "CRITICAL",
+      "created_ms": 1795632110530,
+      "start_ts": 1795632110517,
+      "clear_ts": null,
+      "status": "ACTIVE_UNACK",
+      "last_data_ts": 1795632044460,
+      "detection_ms": 66070.0
+    },
+    {
+      "node": "BID-03",
+      "type": "High Turbidity",
+      "severity": "WARNING",
+      "created_ms": 1795630729987,
+      "start_ts": 1795630729060,
+      "clear_ts": 1795630897061,
+      "status": "CLEARED_UNACK",
+      "breach_ts": 1795630729060,
+      "delay_ms": 927.0,
+      "delay_minus_duration_ms": 927.0,
+      "breach_sent_live": 1
+    },
+    {
+      "node": "BID-03",
+      "type": "Gross Contamination",
+      "severity": "CRITICAL",
+      "created_ms": 1795630734078,
+      "start_ts": 1795630733060,
+      "clear_ts": 1795630813060,
+      "status": "CLEARED_UNACK",
+      "breach_ts": 1795630733060,
+      "delay_ms": 1018.0,
+      "delay_minus_duration_ms": 1018.0,
+      "breach_sent_live": 1
+    },
+    {
+      "node": "BID-03",
+      "type": "pH Out of Range",
+      "severity": "CRITICAL",
+      "created_ms": 1795630735112,
+      "start_ts": 1795630735060,
+      "clear_ts": 1795630809060,
+      "status": "CLEARED_UNACK",
+      "breach_ts": 1795630735060,
+      "delay_ms": 52.0,
+      "delay_minus_duration_ms": 52.0,
+      "breach_sent_live": 1
+    },
+    {
+      "node": "BID-03",
+      "type": "Node Inactive",
+      "severity": "CRITICAL",
+      "created_ms": 1795631375505,
+      "start_ts": 1795631375481,
+      "clear_ts": 1795631515795,
+      "status": "CLEARED_UNACK",
+      "last_data_ts": 1795631375060,
+      "detection_ms": 445.0
+    },
+    {
+      "node": "BID-03",
+      "type": "High Turbidity",
+      "severity": "WARNING",
+      "created_ms": 1795631516096,
+      "start_ts": 1795631329060,
+      "clear_ts": 1795631516357,
+      "status": "CLEARED_UNACK",
+      "breach_ts": 1795631329060,
+      "delay_ms": 187036.0,
+      "delay_minus_duration_ms": 187036.0,
+      "breach_sent_live": 0
+    },
+    {
+      "node": "BID-03",
+      "type": "Gross Contamination",
+      "severity": "CRITICAL",
+      "created_ms": 1795631516133,
+      "start_ts": 1795631333060,
+      "clear_ts": 1795631516297,
+      "status": "CLEARED_UNACK",
+      "breach_ts": 1795631333060,
+      "delay_ms": 183073.0,
+      "delay_minus_duration_ms": 183073.0,
+      "breach_sent_live": 0
+    },
+    {
+      "node": "BID-03",
+      "type": "High Turbidity",
+      "severity": "WARNING",
+      "created_ms": 1795631669435,
+      "start_ts": 1795631669060,
+      "clear_ts": 1795631883062,
+      "status": "CLEARED_UNACK",
+      "breach_ts": 1795631669060,
+      "delay_ms": 375.0,
+      "delay_minus_duration_ms": 375.0,
+      "breach_sent_live": 1
+    },
+    {
+      "node": "BID-03",
+      "type": "Gross Contamination",
+      "severity": "CRITICAL",
+      "created_ms": 1795631671465,
+      "start_ts": 1795631671060,
+      "clear_ts": 1795631799061,
+      "status": "CLEARED_UNACK",
+      "breach_ts": 1795631671060,
+      "delay_ms": 405.0,
+      "delay_minus_duration_ms": 405.0,
+      "breach_sent_live": 1
+    },
+    {
+      "node": "BID-03",
+      "type": "pH Out of Range",
+      "severity": "CRITICAL",
+      "created_ms": 1795631673497,
+      "start_ts": 1795631673060,
+      "clear_ts": 1795631791061,
+      "status": "CLEARED_UNACK",
+      "breach_ts": 1795631673060,
+      "delay_ms": 437.0,
+      "delay_minus_duration_ms": 437.0,
+      "breach_sent_live": 1
+    },
+    {
+      "node": "BID-03",
+      "type": "High TDS",
+      "severity": "CRITICAL",
+      "created_ms": 1795631677562,
+      "start_ts": 1795631677060,
+      "clear_ts": 1795631727061,
+      "status": "CLEARED_UNACK",
+      "breach_ts": 1795631677060,
+      "delay_ms": 502.0,
+      "delay_minus_duration_ms": 502.0,
+      "breach_sent_live": 1
+    },
+    {
+      "node": "BID-03",
+      "type": "Node Inactive",
+      "severity": "CRITICAL",
+      "created_ms": 1795632110530,
+      "start_ts": 1795632110499,
+      "clear_ts": null,
+      "status": "ACTIVE_UNACK",
+      "last_data_ts": 1795632045060,
+      "detection_ms": 65470.0
+    }
+  ],
+  "alarm_delay_ms": {
+    "live_threshold_alarms": {
+      "n": 21,
+      "mean": 550.3333333333334,
+      "median": 437.0,
+      "p95": 1050.0,
+      "max": 1082.0,
+      "min": 1.0,
+      "stdev": 377.49352985099637
+    },
+    "buffered_breach_alarms": {
+      "n": 2,
+      "mean": 185054.5,
+      "median": 185054.5,
+      "p95": 186837.85,
+      "max": 187036.0,
+      "min": 183073.0,
+      "stdev": 1981.5
+    },
+    "node_inactive_detection": {
+      "n": 6,
+      "mean": 33561.0,
+      "median": 33568.0,
+      "p95": 66520.0,
+      "max": 66670.0,
+      "min": 445.0,
+      "stdev": 32512.756419596295
+    }
+  }
+}

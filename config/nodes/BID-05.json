@@ -1,0 +1,16 @@
+{
+  "name": "BID-05",
+  "label": "Bidur W-11 lower irrigation channel",
+  "lat": 27.89320,
+  "lon": 85.16410,
+  "seed": 5,
+  "phase_s": 2.4,
+  "baseline": {
+    "ph0": 7.15,
+    "turb0": 5.0,
+    "tds0": 195,
+    "temp_mean": 21.0,
+    "flow0": 14.0,
+    "rssi0": -82
+  }
+}

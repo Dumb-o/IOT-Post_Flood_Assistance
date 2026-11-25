@@ -1,0 +1,16 @@
+{
+  "name": "BID-08",
+  "label": "Bidur W-17 riverside pump",
+  "lat": 27.88740,
+  "lon": 85.15080,
+  "seed": 8,
+  "phase_s": 4.2,
+  "baseline": {
+    "ph0": 7.10,
+    "turb0": 4.6,
+    "tds0": 180,
+    "temp_mean": 20.8,
+    "flow0": 12.8,
+    "rssi0": -85
+  }
+}

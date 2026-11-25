@@ -1,0 +1,67 @@
+# Teaching copy of the ThingsBoard-only stack.
+# The golden/root compose.yaml is the one used for the full rebuild.
+# This file is kept because it shows clearly why the certificate mount is special.
+#
+# From the PROJECT ROOT:
+#   bash certs/gen_certs.sh localhost 127.0.0.1
+#   docker compose -f thingsboard/docker-compose.yml up -d postgres
+#   docker compose -f thingsboard/docker-compose.yml run --rm -e INSTALL_TB=true -e LOAD_DEMO=true thingsboard-ce
+#   docker compose -f thingsboard/docker-compose.yml up -d
+#   docker compose -f thingsboard/docker-compose.yml up -d
+services:
+  postgres:
+    restart: always
+    image: "postgres:16"
+    ports:
+      - "5432"
+    environment:
+      POSTGRES_DB: thingsboard
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d thingsboard"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  thingsboard-ce:
+    restart: always
+    image: "thingsboard/tb-node:4.3.1.8"
+    ports:
+      - "8080:8080"
+      - "1883:1883"
+      - "8883:8883"
+    environment:
+      TB_SERVICE_ID: tb-ce-node
+      TB_QUEUE_TYPE: in-memory
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/thingsboard
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+
+      # MQTT over TLS. Brief: port 8883. Task 2: TLS 1.2.
+      MQTT_SSL_ENABLED: "true"
+      MQTT_SSL_BIND_PORT: "8883"
+      MQTT_SSL_PROTOCOL: "TLSv1.2"
+      MQTT_SSL_CREDENTIALS_TYPE: "PEM"
+      MQTT_SSL_PEM_CERT: "/etc/thingsboard/certs/server.pem"
+      MQTT_SSL_PEM_KEY: "/etc/thingsboard/certs/server_key.pem"
+      MQTT_SSL_PEM_KEY_PASSWORD: ""
+
+      # Node Inactive alarm must appear quickly in a 15-minute demo.
+      DEFAULT_INACTIVITY_TIMEOUT: "600"
+      DEFAULT_STATE_CHECK_INTERVAL: "5"
+    volumes:
+      # Relative to thingsboard/ — PEMs live in the root certs/ folder.
+      # NEVER change this to ../config/certs: creating /config breaks startup.
+      - ../certs:/etc/thingsboard/certs:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  postgres-data:
+    name: jaldrishti-tb-postgres-data
+    driver: local

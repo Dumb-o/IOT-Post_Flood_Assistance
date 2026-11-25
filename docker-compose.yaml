@@ -1,0 +1,296 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json
+name: jaldridhti
+
+# Shared ThingsBoard environment. The TLS certificate paths are deliberately
+# /etc/thingsboard/certs, NOT /config/certs. Mounting under /config makes the
+# image startup script think a full custom config folder was supplied and it
+# then fails looking for /config/thingsboard.conf and /config/logback.xml.
+x-tb-env: &tb-env
+  TB_SERVICE_ID: tb-ce-node
+  TB_QUEUE_TYPE: in-memory
+  SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/thingsboard
+  SPRING_DATASOURCE_USERNAME: postgres
+  SPRING_DATASOURCE_PASSWORD: postgres
+  MQTT_SSL_ENABLED: "true"
+  MQTT_SSL_BIND_PORT: "8883"
+  MQTT_SSL_PROTOCOL: "TLSv1.2"
+  MQTT_SSL_CREDENTIALS_TYPE: "PEM"
+  MQTT_SSL_PEM_CERT: "/etc/thingsboard/certs/server.pem"
+  MQTT_SSL_PEM_KEY: "/etc/thingsboard/certs/server_key.pem"
+  MQTT_SSL_PEM_KEY_PASSWORD: ""
+  DEFAULT_INACTIVITY_TIMEOUT: "600"
+  DEFAULT_STATE_CHECK_INTERVAL: "5"
+
+services:
+  postgres:
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_DB: thingsboard
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - tb-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d thingsboard"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  thingsboard-ce:
+    image: thingsboard/tb-node:4.3.1.8
+    restart: always
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+      - "1883:1883"
+      - "8883:8883"
+    environment: *tb-env
+    volumes:
+      - ./certs:/etc/thingsboard/certs:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  cert-init:
+    image: alpine:3.20
+    profiles: ["init"]
+    volumes:
+      - ./certs:/work
+      - ./certs/gen_certs.sh:/gen_certs.sh:ro
+    command:
+      - sh
+      - -c
+      - apk add --no-cache openssl && OUT_DIR=/work sh /gen_certs.sh localhost 127.0.0.1
+
+  tb-init:
+    image: thingsboard/tb-node:4.3.1.8
+    profiles: ["init"]
+    restart: "no"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      <<: *tb-env
+      INSTALL_TB: "true"
+      LOAD_DEMO: "true"
+    volumes:
+      - ./certs:/etc/thingsboard/certs:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  edge-bid01:
+    image: jaldridhti-edge:1.0.0
+    build:
+      context: .
+      dockerfile: Dockerfile
+    profiles: ["edge"]
+    restart: unless-stopped
+    depends_on:
+      - thingsboard-ce
+    environment:
+      NODE: BID-01
+      MQTT_HOST: thingsboard-ce
+      MQTT_PORT: "8883"
+      RUN_ID: compose
+      TB_TENANT: default
+    volumes:
+      - ./config:/app/config:ro
+      - ./certs/ca.pem:/app/ca.pem:ro
+      - ./results/tokens:/app/tokens:ro
+      - ./runs:/app/runs
+
+  edge-bid02:
+    image: jaldridhti-edge:1.0.0
+    build:
+      context: .
+      dockerfile: Dockerfile
+    profiles: ["edge"]
+    restart: unless-stopped
+    depends_on:
+      - thingsboard-ce
+    environment:
+      NODE: BID-02
+      MQTT_HOST: thingsboard-ce
+      MQTT_PORT: "8883"
+      RUN_ID: compose
+      TB_TENANT: default
+    volumes:
+      - ./config:/app/config:ro
+      - ./certs/ca.pem:/app/ca.pem:ro
+      - ./results/tokens:/app/tokens:ro
+      - ./runs:/app/runs
+
+  edge-bid03:
+    image: jaldridhti-edge:1.0.0
+    build:
+      context: .
+      dockerfile: Dockerfile
+    profiles: ["edge"]
+    restart: unless-stopped
+    depends_on:
+      - thingsboard-ce
+    environment:
+      NODE: BID-03
+      MQTT_HOST: thingsboard-ce
+      MQTT_PORT: "8883"
+      RUN_ID: compose
+      TB_TENANT: default
+    volumes:
+      - ./config:/app/config:ro
+      - ./certs/ca.pem:/app/ca.pem:ro
+      - ./results/tokens:/app/tokens:ro
+      - ./runs:/app/runs
+
+  edge-ctrl:
+    image: jaldridhti-edge:1.0.0
+    build:
+      context: .
+      dockerfile: Dockerfile
+    profiles: ["edge"]
+    restart: unless-stopped
+    depends_on:
+      - thingsboard-ce
+    environment:
+      NODE: JD-CTRL-01
+      WITH_CONTROL: "1"
+      MQTT_HOST: thingsboard-ce
+      MQTT_PORT: "8883"
+      RUN_ID: compose
+      TB_TENANT: default
+    volumes:
+      - ./config:/app/config:ro
+      - ./certs/ca.pem:/app/ca.pem:ro
+      - ./results/tokens:/app/tokens:ro
+      - ./runs:/app/runs
+
+  edge-bid04:
+    image: jaldridhti-edge:1.0.0
+    build:
+      context: .
+      dockerfile: Dockerfile
+    profiles: ["edge"]
+    restart: unless-stopped
+    depends_on:
+      - thingsboard-ce
+    environment:
+      NODE: BID-04
+      MQTT_HOST: thingsboard-ce
+      MQTT_PORT: "8883"
+      RUN_ID: compose
+      TB_TENANT: default
+    volumes:
+      - ./config:/app/config:ro
+      - ./certs/ca.pem:/app/ca.pem:ro
+      - ./results/tokens:/app/tokens:ro
+      - ./runs:/app/runs
+
+  edge-bid05:
+    image: jaldridhti-edge:1.0.0
+    build:
+      context: .
+      dockerfile: Dockerfile
+    profiles: ["edge"]
+    restart: unless-stopped
+    depends_on:
+      - thingsboard-ce
+    environment:
+      NODE: BID-05
+      MQTT_HOST: thingsboard-ce
+      MQTT_PORT: "8883"
+      RUN_ID: compose
+      TB_TENANT: default
+    volumes:
+      - ./config:/app/config:ro
+      - ./certs/ca.pem:/app/ca.pem:ro
+      - ./results/tokens:/app/tokens:ro
+      - ./runs:/app/runs
+
+  edge-bid06:
+    image: jaldridhti-edge:1.0.0
+    build:
+      context: .
+      dockerfile: Dockerfile
+    profiles: ["edge"]
+    restart: unless-stopped
+    depends_on:
+      - thingsboard-ce
+    environment:
+      NODE: BID-06
+      MQTT_HOST: thingsboard-ce
+      MQTT_PORT: "8883"
+      RUN_ID: compose
+      TB_TENANT: default
+    volumes:
+      - ./config:/app/config:ro
+      - ./certs/ca.pem:/app/ca.pem:ro
+      - ./results/tokens:/app/tokens:ro
+      - ./runs:/app/runs
+
+  edge-bid07:
+    image: jaldridhti-edge:1.0.0
+    build:
+      context: .
+      dockerfile: Dockerfile
+    profiles: ["edge"]
+    restart: unless-stopped
+    depends_on:
+      - thingsboard-ce
+    environment:
+      NODE: BID-07
+      MQTT_HOST: thingsboard-ce
+      MQTT_PORT: "8883"
+      RUN_ID: compose
+      TB_TENANT: default
+    volumes:
+      - ./config:/app/config:ro
+      - ./certs/ca.pem:/app/ca.pem:ro
+      - ./results/tokens:/app/tokens:ro
+      - ./runs:/app/runs
+
+  edge-bid08:
+    image: jaldridhti-edge:1.0.0
+    build:
+      context: .
+      dockerfile: Dockerfile
+    profiles: ["edge"]
+    restart: unless-stopped
+    depends_on:
+      - thingsboard-ce
+    environment:
+      NODE: BID-08
+      MQTT_HOST: thingsboard-ce
+      MQTT_PORT: "8883"
+      RUN_ID: compose
+      TB_TENANT: default
+    volumes:
+      - ./config:/app/config:ro
+      - ./certs/ca.pem:/app/ca.pem:ro
+      - ./results/tokens:/app/tokens:ro
+      - ./runs:/app/runs
+
+  edge-bid09:
+    image: jaldridhti-edge:1.0.0
+    build:
+      context: .
+      dockerfile: Dockerfile
+    profiles: ["edge"]
+    restart: unless-stopped
+    depends_on:
+      - thingsboard-ce
+    environment:
+      NODE: BID-09
+      MQTT_HOST: thingsboard-ce
+      MQTT_PORT: "8883"
+      RUN_ID: compose
+      TB_TENANT: default
+    volumes:
+      - ./config:/app/config:ro
+      - ./certs/ca.pem:/app/ca.pem:ro
+      - ./results/tokens:/app/tokens:ro
+      - ./runs:/app/runs
+
+volumes:
+  tb-postgres:
+    name: jaldrishti-tb-postgres-data
+    driver: local

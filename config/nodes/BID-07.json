@@ -1,0 +1,16 @@
+{
+  "name": "BID-07",
+  "label": "Bidur W-15 upper ridge tank",
+  "lat": 27.92250,
+  "lon": 85.15330,
+  "seed": 7,
+  "phase_s": 3.6,
+  "baseline": {
+    "ph0": 6.95,
+    "turb0": 2.2,
+    "tds0": 220,
+    "temp_mean": 17.5,
+    "flow0": 8.8,
+    "rssi0": -96
+  }
+}

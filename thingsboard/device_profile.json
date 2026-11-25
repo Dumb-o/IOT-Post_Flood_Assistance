@@ -1,0 +1,32 @@
+{
+  "name": "JalDrishti Water Node",
+  "type": "DEFAULT",
+  "transportType": "MQTT",
+  "provisionType": "DISABLED",
+  "description": "JalDrishti post-flood water-quality node (ESP32-S3 + A7670E, simulated). Alarm rules: alarm_rules_cf.json",
+  "defaultRuleChainId": {
+    "entityType": "RULE_CHAIN",
+    "id": "${RULE_CHAIN_ID}"
+  },
+  "profileData": {
+    "configuration": {
+      "type": "DEFAULT"
+    },
+    "transportConfiguration": {
+      "type": "MQTT",
+      "deviceTelemetryTopic": "v1/devices/me/telemetry",
+      "deviceAttributesTopic": "v1/devices/me/attributes",
+      "deviceAttributesSubscribeTopic": "v1/devices/me/attributes",
+      "sparkplug": false,
+      "sendAckOnValidationException": false,
+      "transportPayloadTypeConfiguration": {
+        "transportPayloadType": "JSON"
+      }
+    },
+    "provisionConfiguration": {
+      "type": "DISABLED",
+      "provisionDeviceSecret": null
+    },
+    "alarms": []
+  }
+}

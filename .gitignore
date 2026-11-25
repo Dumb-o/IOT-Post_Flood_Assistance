@@ -1,0 +1,27 @@
+# Python environment and caches
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+
+# Generated credentials and runtime secrets (never publish these)
+*.pem
+results/tokens/
+.env
+.env.*
+
+# Runtime output: local DBs, control files and console logs
+runs/
+*.db
+*.db-wal
+*.db-shm
+*.log
+
+# Local editor / agent state
+.obsidian/
+.superpowers/
+
+# OS files
+.DS_Store
+Thumbs.db

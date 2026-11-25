@@ -1,0 +1,16 @@
+{
+  "name": "BID-06",
+  "label": "Bidur W-13 clinic storage",
+  "lat": 27.90910,
+  "lon": 85.14820,
+  "seed": 6,
+  "phase_s": 3.0,
+  "baseline": {
+    "ph0": 7.30,
+    "turb0": 2.9,
+    "tds0": 168,
+    "temp_mean": 19.0,
+    "flow0": 10.5,
+    "rssi0": -90
+  }
+}

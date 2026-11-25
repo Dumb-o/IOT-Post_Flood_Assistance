@@ -1,0 +1,32 @@
+{
+  "name": "JalDrishti Test Rig",
+  "type": "DEFAULT",
+  "transportType": "MQTT",
+  "provisionType": "DISABLED",
+  "description": "Control (no store-and-forward) and batch-size benchmark devices; no alarm rules",
+  "defaultRuleChainId": {
+    "entityType": "RULE_CHAIN",
+    "id": "${RULE_CHAIN_ID}"
+  },
+  "profileData": {
+    "configuration": {
+      "type": "DEFAULT"
+    },
+    "transportConfiguration": {
+      "type": "MQTT",
+      "deviceTelemetryTopic": "v1/devices/me/telemetry",
+      "deviceAttributesTopic": "v1/devices/me/attributes",
+      "deviceAttributesSubscribeTopic": "v1/devices/me/attributes",
+      "sparkplug": false,
+      "sendAckOnValidationException": false,
+      "transportPayloadTypeConfiguration": {
+        "transportPayloadType": "JSON"
+      }
+    },
+    "provisionConfiguration": {
+      "type": "DISABLED",
+      "provisionDeviceSecret": null
+    },
+    "alarms": []
+  }
+}

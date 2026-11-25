@@ -1,0 +1,16 @@
+{
+  "name": "BID-10",
+  "label": "Bidur W-21 temporary tank",
+  "lat": 27.90170,
+  "lon": 85.13760,
+  "seed": 10,
+  "phase_s": 5.4,
+  "baseline": {
+    "ph0": 7.18,
+    "turb0": 3.0,
+    "tds0": 205,
+    "temp_mean": 18.6,
+    "flow0": 10.0,
+    "rssi0": -92
+  }
+}

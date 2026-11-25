@@ -1,0 +1,134 @@
+{
+  "name": "measure",
+  "_comment": "Measurement run for the six mandatory metrics: >=200 messages per node, >=10 alarm events, one 180 s outage with a breach inside it, two supply interruptions.",
+  "duration_s": 1440,
+  "sample_period_s": 2.0,
+  "compression": 60,
+  "start_hour": 6.0,
+  "seed": 11,
+  "settle_s": 120,
+  "events": [
+    {
+      "at": 60,
+      "type": "rain",
+      "node": "BID-01",
+      "peak_ntu": 650,
+      "rise_min": 12,
+      "washout_min": 70
+    },
+    {
+      "at": 90,
+      "type": "rain",
+      "node": "BID-02",
+      "peak_ntu": 140,
+      "rise_min": 15,
+      "washout_min": 50
+    },
+    {
+      "at": 120,
+      "type": "rain",
+      "node": "BID-03",
+      "peak_ntu": 320,
+      "rise_min": 10,
+      "washout_min": 60
+    },
+    {
+      "at": 400,
+      "type": "interruption",
+      "node": "BID-02",
+      "duration_min": 60
+    },
+    {
+      "at": 480,
+      "type": "rain",
+      "node": "BID-02",
+      "peak_ntu": 720,
+      "rise_min": 12,
+      "washout_min": 60
+    },
+    {
+      "at": 700,
+      "type": "outage",
+      "duration_s": 180,
+      "mode": "blackhole"
+    },
+    {
+      "at": 720,
+      "type": "rain",
+      "node": "BID-03",
+      "peak_ntu": 250,
+      "rise_min": 10,
+      "washout_min": 40
+    },
+    {
+      "at": 1000,
+      "type": "rain",
+      "node": "BID-01",
+      "peak_ntu": 420,
+      "rise_min": 10,
+      "washout_min": 60
+    },
+    {
+      "at": 1060,
+      "type": "rain",
+      "node": "BID-03",
+      "peak_ntu": 660,
+      "rise_min": 12,
+      "washout_min": 60
+    },
+    {
+      "at": 1200,
+      "type": "interruption",
+      "node": "BID-01",
+      "duration_min": 60
+    },
+    {
+      "at": 1260,
+      "type": "bad_token",
+      "node": "BID-02",
+      "duration_s": 40
+    }
+  ],
+  "screenshots": [
+    {
+      "at": 45,
+      "name": "01_normal"
+    },
+    {
+      "at": 140,
+      "name": "02_event_warning_and_critical"
+    },
+    {
+      "at": 445,
+      "name": "03_supply_interruption"
+    },
+    {
+      "at": 505,
+      "name": "04_event_BID-02",
+      "state": "node",
+      "device": "BID-02"
+    },
+    {
+      "at": 845,
+      "name": "05_outage_nodes_inactive"
+    },
+    {
+      "at": 905,
+      "name": "06_after_backfill"
+    },
+    {
+      "at": 905,
+      "name": "07_after_backfill_BID-03",
+      "state": "node",
+      "device": "BID-03"
+    },
+    {
+      "at": 1090,
+      "name": "08_second_event"
+    },
+    {
+      "at": 1245,
+      "name": "09_interruption_BID-01"
+    }
+  ]
+}

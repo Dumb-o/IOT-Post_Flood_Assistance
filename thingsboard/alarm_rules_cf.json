@@ -1,0 +1,413 @@
+[
+  {
+    "type": "ALARM",
+    "name": "High Turbidity",
+    "debugSettings": {
+      "failuresEnabled": true,
+      "allEnabled": false,
+      "allEnabledUntil": 0
+    },
+    "configuration": {
+      "type": "ALARM",
+      "arguments": {
+        "turbidity": {
+          "refEntityKey": {
+            "key": "turbidity_ntu",
+            "type": "TS_LATEST"
+          }
+        }
+      },
+      "createRules": {
+        "WARNING": {
+          "condition": {
+            "type": "SIMPLE",
+            "expression": {
+              "type": "SIMPLE",
+              "filters": [
+                {
+                  "argument": "turbidity",
+                  "valueType": "NUMERIC",
+                  "predicates": [
+                    {
+                      "type": "NUMERIC",
+                      "operation": "GREATER",
+                      "value": {
+                        "staticValue": 50.0
+                      }
+                    }
+                  ]
+                }
+              ],
+              "operation": "AND"
+            }
+          },
+          "alarmDetails": "Turbidity above 50 NTU: chlorination efficacy compromised"
+        }
+      },
+      "clearRule": {
+        "condition": {
+          "type": "DURATION",
+          "unit": "SECONDS",
+          "value": {
+            "staticValue": 30
+          },
+          "expression": {
+            "type": "SIMPLE",
+            "filters": [
+              {
+                "argument": "turbidity",
+                "valueType": "NUMERIC",
+                "predicates": [
+                  {
+                    "type": "NUMERIC",
+                    "operation": "LESS",
+                    "value": {
+                      "staticValue": 40.0
+                    }
+                  }
+                ]
+              }
+            ],
+            "operation": "AND"
+          }
+        }
+      },
+      "propagate": false,
+      "propagateToOwner": false,
+      "propagateToTenant": false,
+      "propagateRelationTypes": []
+    }
+  },
+  {
+    "type": "ALARM",
+    "name": "Gross Contamination",
+    "debugSettings": {
+      "failuresEnabled": true,
+      "allEnabled": false,
+      "allEnabledUntil": 0
+    },
+    "configuration": {
+      "type": "ALARM",
+      "arguments": {
+        "turbidity": {
+          "refEntityKey": {
+            "key": "turbidity_ntu",
+            "type": "TS_LATEST"
+          }
+        }
+      },
+      "createRules": {
+        "CRITICAL": {
+          "condition": {
+            "type": "SIMPLE",
+            "expression": {
+              "type": "SIMPLE",
+              "filters": [
+                {
+                  "argument": "turbidity",
+                  "valueType": "NUMERIC",
+                  "predicates": [
+                    {
+                      "type": "NUMERIC",
+                      "operation": "GREATER",
+                      "value": {
+                        "staticValue": 200.0
+                      }
+                    }
+                  ]
+                }
+              ],
+              "operation": "AND"
+            }
+          },
+          "alarmDetails": "Turbidity above 200 NTU: isolate the source"
+        }
+      },
+      "clearRule": {
+        "condition": {
+          "type": "DURATION",
+          "unit": "SECONDS",
+          "value": {
+            "staticValue": 30
+          },
+          "expression": {
+            "type": "SIMPLE",
+            "filters": [
+              {
+                "argument": "turbidity",
+                "valueType": "NUMERIC",
+                "predicates": [
+                  {
+                    "type": "NUMERIC",
+                    "operation": "LESS",
+                    "value": {
+                      "staticValue": 150.0
+                    }
+                  }
+                ]
+              }
+            ],
+            "operation": "AND"
+          }
+        }
+      },
+      "propagate": false,
+      "propagateToOwner": false,
+      "propagateToTenant": false,
+      "propagateRelationTypes": []
+    }
+  },
+  {
+    "type": "ALARM",
+    "name": "pH Out of Range",
+    "debugSettings": {
+      "failuresEnabled": true,
+      "allEnabled": false,
+      "allEnabledUntil": 0
+    },
+    "configuration": {
+      "type": "ALARM",
+      "arguments": {
+        "ph": {
+          "refEntityKey": {
+            "key": "ph",
+            "type": "TS_LATEST"
+          }
+        }
+      },
+      "createRules": {
+        "CRITICAL": {
+          "condition": {
+            "type": "SIMPLE",
+            "expression": {
+              "type": "SIMPLE",
+              "filters": [
+                {
+                  "argument": "ph",
+                  "valueType": "NUMERIC",
+                  "predicates": [
+                    {
+                      "type": "NUMERIC",
+                      "operation": "LESS",
+                      "value": {
+                        "staticValue": 6.5
+                      }
+                    },
+                    {
+                      "type": "NUMERIC",
+                      "operation": "GREATER",
+                      "value": {
+                        "staticValue": 8.5
+                      }
+                    }
+                  ],
+                  "operation": "OR"
+                }
+              ],
+              "operation": "AND"
+            }
+          },
+          "alarmDetails": "pH outside NDWQS 6.5-8.5"
+        }
+      },
+      "clearRule": {
+        "condition": {
+          "type": "DURATION",
+          "unit": "SECONDS",
+          "value": {
+            "staticValue": 30
+          },
+          "expression": {
+            "type": "SIMPLE",
+            "filters": [
+              {
+                "argument": "ph",
+                "valueType": "NUMERIC",
+                "predicates": [
+                  {
+                    "type": "NUMERIC",
+                    "operation": "GREATER_OR_EQUAL",
+                    "value": {
+                      "staticValue": 6.7
+                    }
+                  },
+                  {
+                    "type": "NUMERIC",
+                    "operation": "LESS_OR_EQUAL",
+                    "value": {
+                      "staticValue": 8.3
+                    }
+                  }
+                ],
+                "operation": "AND"
+              }
+            ],
+            "operation": "AND"
+          }
+        }
+      },
+      "propagate": false,
+      "propagateToOwner": false,
+      "propagateToTenant": false,
+      "propagateRelationTypes": []
+    }
+  },
+  {
+    "type": "ALARM",
+    "name": "High TDS",
+    "debugSettings": {
+      "failuresEnabled": true,
+      "allEnabled": false,
+      "allEnabledUntil": 0
+    },
+    "configuration": {
+      "type": "ALARM",
+      "arguments": {
+        "tds": {
+          "refEntityKey": {
+            "key": "tds_ppm",
+            "type": "TS_LATEST"
+          }
+        }
+      },
+      "createRules": {
+        "CRITICAL": {
+          "condition": {
+            "type": "SIMPLE",
+            "expression": {
+              "type": "SIMPLE",
+              "filters": [
+                {
+                  "argument": "tds",
+                  "valueType": "NUMERIC",
+                  "predicates": [
+                    {
+                      "type": "NUMERIC",
+                      "operation": "GREATER",
+                      "value": {
+                        "staticValue": 500.0
+                      }
+                    }
+                  ]
+                }
+              ],
+              "operation": "AND"
+            }
+          },
+          "alarmDetails": "TDS above 500 mg/L: ingress of run-off"
+        }
+      },
+      "clearRule": {
+        "condition": {
+          "type": "DURATION",
+          "unit": "SECONDS",
+          "value": {
+            "staticValue": 30
+          },
+          "expression": {
+            "type": "SIMPLE",
+            "filters": [
+              {
+                "argument": "tds",
+                "valueType": "NUMERIC",
+                "predicates": [
+                  {
+                    "type": "NUMERIC",
+                    "operation": "LESS",
+                    "value": {
+                      "staticValue": 450.0
+                    }
+                  }
+                ]
+              }
+            ],
+            "operation": "AND"
+          }
+        }
+      },
+      "propagate": false,
+      "propagateToOwner": false,
+      "propagateToTenant": false,
+      "propagateRelationTypes": []
+    }
+  },
+  {
+    "type": "ALARM",
+    "name": "Supply Interruption",
+    "debugSettings": {
+      "failuresEnabled": true,
+      "allEnabled": false,
+      "allEnabledUntil": 0
+    },
+    "configuration": {
+      "type": "ALARM",
+      "arguments": {
+        "flow": {
+          "refEntityKey": {
+            "key": "flow_lpm",
+            "type": "TS_LATEST"
+          }
+        }
+      },
+      "createRules": {
+        "MAJOR": {
+          "condition": {
+            "type": "DURATION",
+            "unit": "SECONDS",
+            "value": {
+              "staticValue": 30
+            },
+            "expression": {
+              "type": "SIMPLE",
+              "filters": [
+                {
+                  "argument": "flow",
+                  "valueType": "NUMERIC",
+                  "predicates": [
+                    {
+                      "type": "NUMERIC",
+                      "operation": "EQUAL",
+                      "value": {
+                        "staticValue": 0.0
+                      }
+                    }
+                  ]
+                }
+              ],
+              "operation": "AND"
+            }
+          },
+          "alarmDetails": "No flow for the sustained period"
+        }
+      },
+      "clearRule": {
+        "condition": {
+          "type": "SIMPLE",
+          "expression": {
+            "type": "SIMPLE",
+            "filters": [
+              {
+                "argument": "flow",
+                "valueType": "NUMERIC",
+                "predicates": [
+                  {
+                    "type": "NUMERIC",
+                    "operation": "GREATER",
+                    "value": {
+                      "staticValue": 0.0
+                    }
+                  }
+                ]
+              }
+            ],
+            "operation": "AND"
+          }
+        }
+      },
+      "propagate": false,
+      "propagateToOwner": false,
+      "propagateToTenant": false,
+      "propagateRelationTypes": []
+    }
+  }
+]
